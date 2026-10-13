@@ -19,16 +19,12 @@ const slides = [
 
 const arrowLeft = document.querySelector(".arrow_left");
 const arrowRight = document.querySelector(".arrow_right");
-const dots = document.querySelector(".dots");
+const bannerImage = document.querySelector(".banner-img");
+const bannerText = document.querySelector("#banner p");
+const dotsContainer = document.querySelector(".dots");
+let currentSlideIndex = 0;
 
-arrowLeft.addEventListener("click", () => {
-	console.log("Vous avez cliqué sur la flèche gauche.");
-});
-
-arrowRight.addEventListener("click", () => {
-	console.log("Vous avez cliqué sur la flèche droite.");
-});
-
+// Crée les points de navigation pour chaque diapositive.
 slides.forEach((slide, index) => {
 	const dot = document.createElement("div");
 	dot.classList.add("dot");
@@ -37,5 +33,39 @@ slides.forEach((slide, index) => {
 		dot.classList.add("dot_selected");
 	}
 
-	dots.appendChild(dot);
+	dotsContainer.appendChild(dot);
+});
+
+// sélectionne tous les points de navigation
+const dots = document.querySelectorAll(".dot");
+
+// Met à jour l'image, le texte et les points en fonction de l'index du diaporama actuel.
+function updateSlide() {
+	const currentSlide = slides[currentSlideIndex];
+
+	bannerImage.src = `./assets/images/slideshow/${currentSlide.image}`;
+	bannerText.innerHTML = currentSlide.tagLine;
+	dots.forEach((dot, index) => {
+		dot.classList.toggle("dot_selected", index === currentSlideIndex);
+	});
+}
+
+// événement de clic sur la flèche gauche
+arrowLeft.addEventListener("click", () => {
+	currentSlideIndex -= 1;
+	if (currentSlideIndex < 0) {
+		currentSlideIndex = slides.length - 1;
+	}
+
+	updateSlide();
+});
+
+// événement de clic sur la flèche droite
+arrowRight.addEventListener("click", () => {
+	currentSlideIndex += 1;
+	if (currentSlideIndex === slides.length) {
+		currentSlideIndex = 0;
+	}
+
+	updateSlide();
 });
