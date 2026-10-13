@@ -28,11 +28,11 @@ let currentSlideIndex = 0;
 slides.forEach((slide, index) => {
 	const dot = document.createElement("div");
 	dot.classList.add("dot");
-
+	// Si c'est le premier point, ajoute la classe "dot_selected" par défaut.
 	if (index === 0) {
 		dot.classList.add("dot_selected");
 	}
-
+	// Ajoute le point au conteneur des points de navigation.
 	dotsContainer.appendChild(dot);
 });
 
@@ -45,6 +45,7 @@ function updateSlide() {
 
 	bannerImage.src = `./assets/images/slideshow/${currentSlide.image}`;
 	bannerText.innerHTML = currentSlide.tagLine;
+	// Pour chaque point ajoute ou supprime la classe "dot_selected" en fonction de l'index actuel.
 	dots.forEach((dot, index) => {
 		dot.classList.toggle("dot_selected", index === currentSlideIndex);
 	});
